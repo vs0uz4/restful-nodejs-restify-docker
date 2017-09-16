@@ -33,3 +33,9 @@ Sem sombra de dúvidas, o Ambientum irá facilitar a sua vida em muito, principa
 
 Mas não se preocupem, o readme está escrito em dois idiomas: Inglês e Português.
 
+## Instalação e Execução
+1. Faça o clone do repositório e no terminal navegue até a pasta;
+...
+
+## Sugestão
+Utilize o Postman para testar suas chamadas. [https://www.getpostman.com/](https://www.getpostman.com/).
