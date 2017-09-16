@@ -35,6 +35,7 @@ Mas não se preocupem, o readme está escrito em dois idiomas: Inglês e Portugu
 
 ## Instalação e Execução
 1. Faça o clone do repositório e no terminal navegue até a pasta;
+
 ...
 
 ## Sugestão
