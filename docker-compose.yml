@@ -1,0 +1,28 @@
+version: '2'
+
+volumes:
+  restful-config:
+    driver: local
+  restful-cache:
+    driver: local
+  restful-local:
+    driver: local
+  restful-yarn:
+    driver: local
+  restful-npm:
+    driver: local
+
+services:
+  web:
+    image: ambientum/node:8
+    container_name: restful-web
+    command: npm run dev
+    ports:
+      - "3456:3456"
+    volumes:
+      - .:/var/www/app
+      - restful-config:/home/ambientum/.config
+      - restful-cache:/home/ambientum/.cache
+      - restful-local:/home/ambientum/.local
+      - restful-yarn:/home/ambientum/.yarn
+      - restful-npm:/home/ambientum/.npm
