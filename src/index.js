@@ -1,3 +1,6 @@
+
+require('dotenv').config()
+
 const server = require('./server')
 
-server.listen('3456')
+server.listen(process.env.SERVER_PORT)
