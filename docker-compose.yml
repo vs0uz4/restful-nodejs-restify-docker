@@ -11,8 +11,22 @@ volumes:
     driver: local
   restful-npm:
     driver: local
+  restful-mysql-data:
+    driver: local
 
 services:
+  mysql:
+    image: ambientum/mysql:5.7
+    container_name: restful-mysql
+    volumes:
+      - restful-mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=restful_ws
+      - MYSQL_DATABASE=restful_ws
+      - MYSQL_USER=restful_ws
+      - MYSQL_PASSWORD=restful_ws
   web:
     image: ambientum/node:8
     container_name: restful-web
@@ -26,3 +40,5 @@ services:
       - restful-local:/home/ambientum/.local
       - restful-yarn:/home/ambientum/.yarn
       - restful-npm:/home/ambientum/.npm
+    links:
+      - mysql
