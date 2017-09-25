@@ -42,7 +42,7 @@ git clone git@github.com:vs0uz4/restful-nodejs-restify.git
 cd restful-nodejs-restify
 ```
 
-2. Faça uma cópia do .env.example para um novo arquivo com nome de .env e preencha os valores das variáveis de acordo com as variáveis de ambiente configuradas no arquivo docker-compose.yml. 
+2. Faça uma cópia do `.env.example` para um novo arquivo com nome de `.env` e preencha os valores das variáveis de acordo com as variáveis de ambiente configuradas no arquivo docker-compose.yml. 
 
 ```
 cp .env.example .env
