@@ -34,9 +34,115 @@ Sem sombra de dúvidas, o Ambientum irá facilitar a sua vida em muito, principa
 Mas não se preocupem, o readme está escrito em dois idiomas: Inglês e Português.
 
 ## Instalação e Execução
-1. Faça o clone do repositório e no terminal navegue até a pasta;
 
-...
+1. Faça o clone do repositório e no terminal navegue até a pasta criada com os comandos abaixo:
+
+```
+git clone git@github.com:vs0uz4/restful-nodejs-restify.git
+cd restful-nodejs-restify
+```
+
+2. Faça uma cópia do .env.example para um novo arquivo com nome de .env e preencha os valores das variáveis de acordo com as variáveis de ambiente configuradas no arquivo docker-compose.yml. 
+
+```
+cp .env.example .env
+```
+
+Exemplo de configuração das variáveis.
+```
+SERVER_PORT=3456
+
+MYSQL_HOST=mysql
+MYSQL_USER=restful_ws
+MYSQL_PASSWORD=restful_ws
+MYSQL_DATABASE=restful_ws
+MYSQL_TEST_DATABASE=restful_ws_test
+
+JWT_SECRET=bf21391faaa389b98d62053230feba28a288fd93
+```
+
+> As variáveis de ambiente para configuração da `porta` do servidor e as relacionadas ao banco de dados `mysql`, devem obrigatoriamente coincidirem com as mesmas informadas no arquivo docker-compose.yml.
+
+3. Instale as dependências globais no container com os comandos abaixo:
+
+```
+docker-compose run web npm i -g npm nodemon
+```
+
+4. Inicialize os containers.
+
+```
+docker-compose up
+```
+
+5. Crie as tabelas da base de dados principal com os comandos abaixo:
+
+```
+docker-compose exec mysql mysql -uroot -prestful_ws
+
+USE `restful_ws`;
+
+CREATE TABLE `categories` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+```
+
+> Sem desconectar e/ou sair do mysql, siga os passos seguintes.
+
+6. Adicione a base principal, um usuário padrão para podermos nos conectar posteriormente. 
+
+```
+INSERT INTO `users` (email, password) VALUES ('admin@example.com', SHA1('123456'));
+```
+
+7. Crie a base de dados de teste, suas respectivas tabelas e aplique as políticas de segurança no MYSQL para o usuário da aplicação.
+
+```
+CREATE DATABASE `restful_ws_test`;
+
+USE `restful_ws_test`;
+
+CREATE TABLE `categories` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+GRANT ALL ON restful_ws.* TO 'restful_ws'@'%';
+GRANT ALL ON restful_ws_test.* TO 'restful_ws'@'%';
+FLUSH PRIVILEGES;
+```
+
+> Após o termino da realização dos procedimentos acima listados, faça a desconexão do MySQL, para isto basta executar no console do banco de dados o comando: `\q`. 
+
+## Executando Testes
+Para executarmos os testes apresentados no decorrer da série, em uma nova aba do console, digitarmos o seguinte comando:
+
+```
+docker-compose exec web npm run test
+```
+
+> Caso seja necessário executar os testes em modo `watch`, basta acrecentarmos ao comando anterior `-- --watch`.
+
+```
+docker-compose exec web npm run test -- --watch
+```
 
 ## Sugestão
 Utilize o Postman para testar suas chamadas. [https://www.getpostman.com/](https://www.getpostman.com/).
