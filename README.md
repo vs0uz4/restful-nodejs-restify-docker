@@ -63,10 +63,11 @@ JWT_SECRET=bf21391faaa389b98d62053230feba28a288fd93
 
 > As variáveis de ambiente para configuração da `porta` do servidor e as relacionadas ao banco de dados `mysql`, devem obrigatoriamente coincidirem com as mesmas informadas no arquivo docker-compose.yml.
 
-3. Instale as dependências globais no container com os comandos abaixo:
+3. Instale as dependências globais e de desenvolvimento no container com os comandos abaixo:
 
 ```
 docker-compose run web npm i -g npm nodemon
+docker-compose run web npm i
 ```
 
 4. Inicialize os containers.
