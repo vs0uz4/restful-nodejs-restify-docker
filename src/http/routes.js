@@ -17,9 +17,18 @@ const routes = (server) => {
     next()
   })
 
-  server.get('usuario', async (req, res, next) => {
+  server.get('usuarios', async (req, res, next) => {
     try {
       res.send(await db.users().all())
+    } catch (error) {
+      res.send(error)
+    }
+    next()
+  })
+
+  server.get('usuario/:id', async (req, res, next) => {
+    try {
+      res.send(await db.users().one(req.params.id))
     } catch (error) {
       res.send(error)
     }
@@ -56,9 +65,18 @@ const routes = (server) => {
     next()
   })
 
-  server.get('categoria', async (req, res, next) => {
+  server.get('categorias', async (req, res, next) => {
     try {
       res.send(await db.categories().all())
+    } catch (error) {
+      res.send(error)
+    }
+    next()
+  })
+
+  server.get('categoria/:id', async (req, res, next) => {
+    try {
+      res.send(await db.categories().one(req.params.id))
     } catch (error) {
       res.send(error)
     }

@@ -17,6 +17,19 @@ const users = deps => {
       })
     },
 
+    one: (id) => {
+      return new Promise((resolve, reject) => {
+        const { connection, errorHandler } = deps
+        connection.query('SELECT * FROM users WHERE id = ?', id, (error, results) => {
+          if (error) {
+            errorHandler(error, 'Falha ao obter o usuário', reject)
+            return false
+          }
+          resolve({ user: results[0] })
+        })
+      })
+    },
+
     save: (email, password) => {
       return new Promise((resolve, reject) => {
         const { connection, errorHandler } = deps
