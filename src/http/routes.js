@@ -9,7 +9,7 @@ const routes = (server) => {
 
   server.post('autenticacao', async (req, res, next) => {
     try {
-      const { email, password } = req.params
+      const { email, password } = req.body
       res.send(await db.auth().authenticate(email, password))
     } catch (error) {
       res.send(error)
@@ -27,7 +27,7 @@ const routes = (server) => {
   })
 
   server.post('usuario', async (req, res, next) => {
-    const { email, password } = req.params
+    const { email, password } = req.body
     try {
       res.send(await db.users().save(email, password))
     } catch (error) {
@@ -37,7 +37,7 @@ const routes = (server) => {
   })
 
   server.put('usuario', async (req, res, next) => {
-    const { id, password } = req.params
+    const { id, password } = req.body
     try {
       res.send(await db.users().update(id, password))
     } catch (error) {
@@ -66,7 +66,7 @@ const routes = (server) => {
   })
 
   server.post('categoria', async (req, res, next) => {
-    const { name } = req.params
+    const { name } = req.body
     try {
       res.send(await db.categories().save(name))
     } catch (error) {
@@ -76,7 +76,7 @@ const routes = (server) => {
   })
 
   server.put('categoria', async (req, res, next) => {
-    const { id, name } = req.params
+    const { id, name } = req.body
     try {
       res.send(await db.categories().update(id, name))
     } catch (error) {
