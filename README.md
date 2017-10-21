@@ -53,7 +53,7 @@ Exemplo de configuração das variáveis.
 SERVER_PORT=3456
 
 MYSQL_HOST=mysql
-MYSQL_USER=restful_ws
+MYSQL_USERNAME=restful_ws
 MYSQL_PASSWORD=restful_ws
 MYSQL_DATABASE=restful_ws
 MYSQL_TEST_DATABASE=restful_ws_test
