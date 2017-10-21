@@ -16,6 +16,13 @@ test('Lista de Categorias', async t => {
   t.is(list.categories[0].name, 'category-test')
 })
 
+test('Lista uma Categoria', async t => {
+  await create()
+  const result = await categories.one(1)
+  t.is(result.category.id, 1)
+  t.is(result.category.name, 'category-test')
+})
+
 test('Criação de Categoria', async t => {
   const result = await create()
   t.is(result.category.name, 'category-test')
