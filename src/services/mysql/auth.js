@@ -12,6 +12,7 @@ const auth = deps => {
 
         connection.query(queryString, queryData, (error, results) => {
           if (error || !results.length) {
+            // @TODO(Vitor Rodrigues): Refuse to call the 'errorHandler' function, using only two parameters (error and rejectFunction), when there is no 'error' create a new instance with 'new Error("Descrição do Erro")'
             errorHandler(error, 'Falha ao localizar o usuário', reject)
             return false
           }
