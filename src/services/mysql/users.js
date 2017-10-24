@@ -9,9 +9,15 @@ const users = deps => {
 
         connection.query('SELECT id, email FROM users', (error, results) => {
           if (error) {
-            errorHandler(error, 'Falha ao listar os usuários', reject)
+            errorHandler(error, reject)
             return false
           }
+
+          if (!results.length) {
+            errorHandler(new Error('Nenhum Usuário Encontrado'), reject)
+            return false
+          }
+
           resolve({ users: results })
         })
       })
@@ -22,9 +28,15 @@ const users = deps => {
         const { connection, errorHandler } = deps
         connection.query('SELECT * FROM users WHERE id = ?', id, (error, results) => {
           if (error) {
-            errorHandler(error, 'Falha ao obter o usuário', reject)
+            errorHandler(error, reject)
             return false
           }
+
+          if (!results.length) {
+            errorHandler(new Error(`Usuário se ID ${id} Não Encontrado`), reject)
+            return false
+          }
+
           resolve({ user: results[0] })
         })
       })
@@ -36,9 +48,15 @@ const users = deps => {
 
         connection.query('INSERT INTO users (email, password) VALUES (?, ?)', [email, sha1(password)], (error, results) => {
           if (error) {
-            errorHandler(error, `Falha ao inserir o usuário ${email}`, reject)
+            errorHandler(error, reject)
             return false
           }
+
+          if (!results.affectedRows) {
+            errorHandler(new Error(`Falha ao Tentar Inserir o Usuário ${email}`), reject)
+            return false
+          }
+
           resolve({ user: { email, id: results.insertId } })
         })
       })
@@ -49,10 +67,16 @@ const users = deps => {
         const { connection, errorHandler } = deps
 
         connection.query('UPDATE users SET password = ? WHERE id = ?', [sha1(password), id], (error, results) => {
-          if (error || !results.affectedRows) {
-            errorHandler(error, `Falha ao atualizar o usuário de ID ${id}`, reject)
+          if (error) {
+            errorHandler(error, reject)
             return false
           }
+
+          if (!results.affectedRows) {
+            errorHandler(new Error(`Falha ao Tentar Atualizar o Usuário de ID ${id}`), reject)
+            return false
+          }
+
           resolve({ user: { id }, affectedRows: results.affectedRows })
         })
       })
@@ -63,11 +87,17 @@ const users = deps => {
         const { connection, errorHandler } = deps
 
         connection.query('DELETE FROM users WHERE id = ?', [id], (error, results) => {
-          if (error || !results.affectedRows) {
-            errorHandler(error, `Falha ao remover o usuário de ID ${id}`, reject)
+          if (error) {
+            errorHandler(error, reject)
             return false
           }
-          resolve({ message: 'Usuário removida com sucesso!', affectedRows: results.affectedRows })
+
+          if (!results.affectedRows) {
+            errorHandler(new Error(`Falha ao Tentar Remover o Usuário de ID ${id}`), reject)
+            return false
+          }
+
+          resolve({ message: 'Usuário Removido com Sucesso!', affectedRows: results.affectedRows })
         })
       })
     }
