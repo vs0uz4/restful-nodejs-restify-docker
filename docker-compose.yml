@@ -24,6 +24,7 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=restful_ws
+      - MYSQL_ROOT_HOST=%
       - MYSQL_DATABASE=restful_ws
       - MYSQL_USER=restful_ws
       - MYSQL_PASSWORD=restful_ws
