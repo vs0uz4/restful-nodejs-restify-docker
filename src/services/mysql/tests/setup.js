@@ -10,12 +10,6 @@ const connection = mysqlServer.createConnection({
   database: process.env.MYSQL_TEST_DATABASE
 })
 
-const errorHandler = (error, msg, rejectFunction) => {
-  // @TODO(Vitor Rodrigues): Refactor this method by implementing 'errorHandler' with only 2 parameters (error and reject) and use 'error.msg' instead of 'msg'
-  if (error) {
-    console.error(error)
-  }
-  rejectFunction({ error: msg })
-}
+const { errorHandler } = require('../errorHandler')
 
 module.exports = { connection, errorHandler }
