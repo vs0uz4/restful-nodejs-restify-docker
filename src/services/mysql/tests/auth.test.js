@@ -21,5 +21,5 @@ test('Login de Usuário - Sucesso', async t => {
 test('Login de Usuário - Falha', async t => {
   const promise = auth.authenticate('user2@test.com', '123456')
   const error = await t.throws(promise)
-  t.is(error.error, 'Falha ao localizar o usuário')
+  t.is(error.error, 'Falha ao Tentar Localizar o Usuário')
 })
